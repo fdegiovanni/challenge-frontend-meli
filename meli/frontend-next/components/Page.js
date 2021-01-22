@@ -5,6 +5,7 @@ import styled, { ThemeProvider, injectGlobal} from 'styled-components';
 
  const theme = {
     yellow: '#FFE600',
+    blue: '#3483FA',
     red: '#FF0000',
     black: '#333333',
     grey: '#999999',
@@ -16,14 +17,16 @@ import styled, { ThemeProvider, injectGlobal} from 'styled-components';
  };
 
 const StyledPage = styled.div`
-    background: white;
+    background: ${props => props.theme.lightgrey};
     color: ${props => props.theme.black};
+    height: 100%;
 `;
 
 const Inner = styled.div`
-    max-width: ${props => props.theme.maxWidth};
+    max-width: 100%;
     margin: 0 auto;
-    padding: 2rem;
+    padding: 2rem 15%;
+    height: 100%;
 `;
 
 injectGlobal`
