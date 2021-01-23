@@ -6,7 +6,7 @@ const Meta = () => (
         <meta charSet="utf-8" />
         <link rel="shorcut icon" href="/static/favicon-96x96.png" />
         <link rel="stylesheet" type="text/css" href="/static/nprogress.css" />
-        <title>Mercado Libre Challenge</title>
+        <title>MeLi Challenge</title>
 
     </Head>
 );

@@ -11,28 +11,30 @@ class Item extends Component {
     item: PropTypes.object.isRequired,
   };
 
-
-        // IMAGEN      precio icon
-        //             titulo
-        //             estado
-
   render() {
     const { item } = this.props;
     return (
+      <Link
+            href={{
+              pathname: '/items',
+              query: { id: item.id },
+              state: [this.props.categories]
+            }}
+          >
+          <ItemStyles>
+          {item.picture && <img src={item.picture} alt={item.title} />}
+          <div>
+              <h1>{formatMoney(item.price.amount, {style: 'currency', currency: item.price.currency, minimumFractionDigits: item.price.decimals})}</h1>
 
-
-      <ItemStyles>
-           {item.picture && <img src={item.picture} alt={item.title} />}
-            <div>
-                <h1>{formatMoney(item.price.amount, {style: 'currency', currency: item.price.currency, minimumFractionDigits: item.price.decimals})}</h1>
-
+          
+              <p>{item.title}</p>
+              <p>{(item.condition) ? 'Completo Único' : ''}</p>
+          </div>
+          <span>{item.address.state_name}</span>
             
-                <p>{item.title}</p>
-                <p>{(item.condition) ? 'Completo Único' : ''}</p>
-            </div>
-            <span>San Francisco</span>
-        
-      </ItemStyles>
+          </ItemStyles>
+          </Link>
+     
     );
   }
 }

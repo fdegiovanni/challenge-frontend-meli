@@ -19,14 +19,14 @@ import styled, { ThemeProvider, injectGlobal} from 'styled-components';
 const StyledPage = styled.div`
     background: ${props => props.theme.lightgrey};
     color: ${props => props.theme.black};
-    height: 100%;
+
 `;
 
 const Inner = styled.div`
     max-width: 100%;
     margin: 0 auto;
     padding: 2rem 15%;
-    height: 100%;
+
 `;
 
 injectGlobal`
@@ -62,12 +62,21 @@ injectGlobal`
 `;
 
 export default class Page extends Component {
+    state = {
+        items: [],
+        categories: []
+    };
+
+    // updateState = (items, categories) => {
+    //     this.setState({ items, categories });
+    //   };
+
     render(){
         return(
             <ThemeProvider theme={theme}>
                 <StyledPage>
                     <Meta />
-                    <Header />
+                    <Header updateState={this.updateState}/>
                     
                     <Inner>
                         {this.props.children}

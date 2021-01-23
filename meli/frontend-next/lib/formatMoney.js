@@ -3,7 +3,7 @@ const REGIONS = {
   USD: 'en-US'
 };
 
-export default function (amount, options) {
+export default function formatMoney (amount, options) {
   options.minimumFractionDigits = (amount % 100 == 0) ? options.minimumFractionDigits : 0;
   var n = amount.toLocaleString(REGIONS[options.currency], options);
   var p = n.indexOf(',');
@@ -12,4 +12,3 @@ export default function (amount, options) {
     (m, i) => p < 0 || i < p ? `${m}.` : m
   );
 }
-

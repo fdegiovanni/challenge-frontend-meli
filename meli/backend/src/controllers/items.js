@@ -19,7 +19,7 @@ exports.search = (req, res) => {
     request({ uri: url }, function (error, response, body) {
         if (!error && response.statusCode === 200) {
             var json = JSON.parse(body);
-            var data = adaptItems(json.results);
+            var data = adaptItems(json);
             res.status(200).jsonp(data);
         } else {
             res.json(error);
@@ -48,7 +48,7 @@ exports.find = (req, res) => {
                     console.log('eueueueue')
                     var description = JSON.parse(body);
                     byId.description = description;
-                    var data = adaptItems([byId], true);
+                    var data = adaptItems({results: [byId]}, true);
                     res.status(200).jsonp(data);
                 }
             });
@@ -59,7 +59,7 @@ exports.find = (req, res) => {
     );
 }
 
-const adaptItems = (list, only = false) => {
+const adaptItems = (data, only = false) => {
     var response = {
         author: {
             name: "Federico",
@@ -69,16 +69,31 @@ const adaptItems = (list, only = false) => {
         items: []
     };
 
-    list.forEach(item => {
-        const { adapted, category } = adaptSearchItem(item, only);
+
+
+    data.results.forEach(item => {
+        const adapted = adaptSearchItem(item, only);
         response.items.push(adapted);
-        if (!response.categories.includes(category)) {
-            response.categories.push(category);
-        }
     });
+
+    
 
     if (only) {
         delete response.categories;
+
+        var item = response.items[0];
+        response.item = item;
+        delete response.items;
+    }else{
+        if (data.filters.lenght > 0) {
+            data.filters[0].values[0].path_from_root.forEach(value => {
+                response.categories.push(value.name);
+            });
+        } else {
+            response.categories.push(data.available_filters[0].values[0].name);
+
+        }
+        
     }
 
     return response;
@@ -95,14 +110,19 @@ const adaptSearchItem = (data, only) => {
         },
         picture: data.thumbnail,
         condition: data.condition,
-        free_shipping: data.shipping.free_shipping
+        free_shipping: data.shipping.free_shipping,
+        address: data.address
     };
 
     if (only) {
+        var images = data.pictures.find(function (pic) { 
+            const [width, height] = pic.max_size.split('x');
+            return width >= 680 && height > 680 ; 
+        }); 
+        adapted.picture = (images !== undefined && images !== null) ? images.url : adapted.picture;
         adapted.sold_quantity = data.sold_quantity
         adapted.description = data.description.plain_text;
     }
 
-    const category = data.category_id;
-    return { adapted, category };
+    return adapted;
 }

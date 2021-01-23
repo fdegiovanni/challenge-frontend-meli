@@ -18,7 +18,7 @@ const StyleHeader = styled.header`
 
 `;
 
-const Header = () => (
+const Header = (props) => (
     <StyleHeader>
         <Search />
     </StyleHeader>

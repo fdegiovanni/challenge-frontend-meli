@@ -30,7 +30,7 @@ width: 100%;
   .input-group-icon{
     background:${props => props.theme.offWhite};
     padding: 2px 10px 2px 10px;
-    
+    height: 36px;
   }
   .input-group-area{
     width:100%;

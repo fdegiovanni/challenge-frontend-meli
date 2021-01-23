@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const Item = styled.div`
+const Item = styled.a`
   padding-top: 14px;
   padding-bottom: 14px;
   background: white;
@@ -23,6 +23,7 @@ const Item = styled.div`
 
   div {
     padding-left: 14px;
+    width: 70%;
   }
 
   span {
@@ -35,6 +36,7 @@ const Item = styled.div`
     margin-right: 10%;
     text-align: right;
     padding-top: 1.5rem;
+    width:30%;
   }
 
   h1 {
