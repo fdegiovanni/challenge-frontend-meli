@@ -6,8 +6,9 @@
   "scripts": {
     "dev": "next -p 7777",
     "build": "next build",
-    "start": "next start",
-    "vercel-build": "next build"
+    "start": "next start -p $PORT",
+    "vercel-build": "next build",
+    "heroku-postbuild": "next build"
   },
   "author": "",
   "license": "ISC",
