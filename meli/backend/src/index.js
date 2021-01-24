@@ -5,7 +5,6 @@ const createServer = require('./createServer');
 const app = createServer();
 
 
-
 app.get('/hola/:name', (req, res) =>{
   res.send({message: `Hola ${req.params.name}`});
 })

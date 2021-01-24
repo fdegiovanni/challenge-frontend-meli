@@ -1,4 +1,5 @@
 const express = require('express');
+var cors = require('cors');
 const bodyParser = require('body-parser');
 
 function createServer(){
@@ -7,6 +8,9 @@ function createServer(){
     //middleware
     server.use(bodyParser.urlencoded({extended: false}));
     server.use(bodyParser.json());
+    server.use(cors());
+  
+    server.options(process.env.FRONTEND_URL, cors());
 
     //controllers
 
