@@ -3,7 +3,7 @@ import Head from 'next/head';
 import ResultTitle from './styles/ResultTitle';
 import Detail from './styles/ItemDetailStyles';
 import getItem from '../services/getItem';
-
+import formatMoney from '../lib/formatMoney';
 
 class ItemDetails extends Component {
   constructor(props) {
@@ -11,15 +11,21 @@ class ItemDetails extends Component {
     this.state = {
         query: props.id,
         categories: [],
-        item: []
+        item: [],
+        money: ["$"]
     }
 }
 
 componentDidMount() {
+  var categories = JSON.parse(localStorage.getItem('categories'));
+  console.log(this);
     getItem(this.state.query).then(response => {
         console.log(response);
-        const {item} = response
-        this.setState({ item });
+        const {item} = response;
+
+        var money = formatMoney(item.price.amount, {style: 'currency', currency: item.price.currency, minimumFractionDigits: item.price.decimals})
+        money = money.split(',');
+        this.setState({ item, money, categories});
     })
 }
 
@@ -30,7 +36,7 @@ componentDidMount() {
         <Head>
             <title>MeLi Challenge | {item.title} </title>
         </Head>
-        <ResultTitle>Categoria &#62; Sub categoria &#62; Producto &#62; Especificacion  </ResultTitle>
+        <ResultTitle> {(this.state.categories !== undefined) ? this.state.categories.join(' > ') : 'Categorias'} </ResultTitle>
         <Detail>
           <div className="description">
             <img src={item.picture} alt={item.title} />
@@ -40,7 +46,7 @@ componentDidMount() {
           <div className="title">
               <span>{(item.condition === 'new') ? 'Nuevo' : ''} - {item.sold_quantity} vendidos</span>
               <h1>{item.title}</h1>
-              <h2>$ 1.920<sup>00</sup></h2>
+              <h2>{this.state.money[0]}<sup>{(this.state.money.length === 2) ? this.state.money[1] : ''}</sup></h2>
 
               <button onClick={(e) => {
                 e.preventDefault();

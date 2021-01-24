@@ -20,10 +20,12 @@ class Items extends Component {
     }
 
     componentDidMount() {
+        localStorage.removeItem('categories');
         getItems(this.state.query).then(response => {
             console.log(response);
             const {categories, items} = response
             this.setState({ categories, items });
+            localStorage.setItem('categories', JSON.stringify(categories));
         })
     }
 
