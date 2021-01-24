@@ -7,6 +7,7 @@
     "start": "nodemon -e js, node src/index.js",
     "dev": "nodemon -e js, node --inspect src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
+    "vercel-build": "npm run build && mv build dist",
   },
   "author": "fdegiovanni",
   "license": "ISC",
